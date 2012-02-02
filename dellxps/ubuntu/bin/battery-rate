@@ -1,0 +1,4 @@
+#!/bin/bash
+
+grep rate /proc/acpi/battery/BAT0/state
+

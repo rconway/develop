@@ -1,0 +1,4 @@
+#!/bin/bash
+
+lspci -d 10de: -vvnn
+
