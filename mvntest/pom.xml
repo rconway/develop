@@ -1,0 +1,34 @@
+<project>
+  <!-- model version is always 4.0.0 for Maven 2.x POMs -->
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <!-- project coordinates, i.e. a group of values which
+       uniquely identify this project -->
+ 
+  <groupId>uk.rconway</groupId>
+  <artifactId>mvntest</artifactId>
+  <version>0.1</version>
+ 
+  <!-- library dependencies -->
+ 
+  <dependencies>
+    <dependency>
+ 
+      <!-- coordinates of the required library -->
+ 
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>RELEASE</version>
+ 
+      <!-- this dependency is only used for running and compiling tests -->
+ 
+      <scope>test</scope>
+ 
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>RELEASE</version>
+    </dependency>
+  </dependencies>
+</project>
