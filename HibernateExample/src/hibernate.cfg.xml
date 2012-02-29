@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+		<!-- Database connection settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:./dbdata/exampledb;AUTO_SERVER=TRUE</property>
+        <!-- <property name="connection.username"></property> -->
+        <!-- <property name="connection.password"></property> -->
+
+        <!-- JDBC connection pool (use the built-in) -->
+        <!-- COMMENTED OUT ~ This is the built-in connection pool with a value of zero to turn pooling off.
+        <property name="connection.pool_size">0</property>
+        -->
+        <!-- INSTEAD use the C3P0 connection pool as described in the hibernate online manual -->
+        <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.min_size">1</property>
+        <property name="hibernate.c3p0.max_size">5</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="current_session_context_class">thread</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+
+        <!-- Drop and re-create the database schema on startup -->
+        <!-- Use 'create' to initialise to an empty schema -->
+        <!-- For normal operation use 'validate' which makes no DB changes -->
+        <property name="hbm2ddl.auto">create</property>
+        
+        <!-- The Java POJOs -->
+        <mapping class="com.selexsi.yckmf.Person" />
+        <mapping class="com.selexsi.yckmf.Address" />
+
+    </session-factory>
+
+</hibernate-configuration>

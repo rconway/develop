@@ -1,0 +1,4 @@
+<?eclipse.ant.import?>
+<project>
+    <target name="hudson" depends="build,UnitTest,junitreport" />
+</project>
