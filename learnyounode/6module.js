@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 
 module.exports = filterDirectory;
 
@@ -10,20 +11,26 @@ function filterDirectory(thepath, ext, callback)
 		{
 			return callback(err);
 		}
-		var answer = [];
-		for (var i = 0; i < list.length; ++i)
+		
+		// Approach using list filter.
+		list = list.filter(function(file)
 		{
-			var str = list[i];
-			var parts = str.split('.');
-			if (parts.length > 1)
+			return path.extname(file) === "." + ext;
+		});
+		callback(null, list);
+
+		/*
+		 * Alternative approach using another array.
+		 *
+		var answer = [];
+		list.forEach(function(file)
+		{
+			if (path.extname(file) === "." + ext)
 			{
-				var lastPart = parts[parts.length-1];
-				if (lastPart == ext)
-				{
-					answer.push(str);
-				}
-			}
-		}
+				answer.push(file);
+			}			
+		});	
 		callback(null, answer);
+		 */
 	});
 }

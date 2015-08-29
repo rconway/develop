@@ -1,9 +1,11 @@
 var filterDirectory = require('./6module.js');
+var inputDirectory = process.argv[2];
+var inputExtenstion = process.argv[3];
 
-filterDirectory(process.argv[2], process.argv[3], function(err, list)
+filterDirectory(inputDirectory, inputExtenstion, function(err, list)
 {
-	for (var i = 0; i < list.length; ++i)
+	list.forEach(function(file)
 	{
-		console.log(list[i]);
-	}
+		console.log(file);
+	});	
 });
