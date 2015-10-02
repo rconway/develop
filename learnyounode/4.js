@@ -1,10 +1,9 @@
-var fs = require('fs');
+var fs = require('fs')
 
-fs.readFile(process.argv[2], processFile);
+var file = process.argv[2]
 
-function processFile(err, buffer)
-{
-	var bufferStr = buffer.toString();
-	var parts = bufferStr.split('\n');
-	console.log(parts.length-1);
-}
+fs.readFile(file, function (err, contents) {
+	// fs.readFile(file, 'utf8', callback) can also be used
+	var lines = contents.toString().split('\n').length - 1
+	console.log(lines)
+})
