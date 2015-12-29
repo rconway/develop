@@ -1,11 +1,13 @@
-var filterDirectory = require('./6module.js');
-var inputDirectory = process.argv[2];
-var inputExtenstion = process.argv[3];
+var filterFn = require('./6module.js')
+var dir = process.argv[2]
+var filterStr = process.argv[3]
+    
+filterFn(dir, filterStr, function (err, list) {
+	if (err)
+		return console.error('There was an error:', err)
 
-filterDirectory(inputDirectory, inputExtenstion, function(err, list)
-{
-	list.forEach(function(file)
-	{
-		console.log(file);
-	});	
-});
+	list.forEach(function (file) {
+		console.log(file)
+	})
+})
+

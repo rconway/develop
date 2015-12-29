@@ -1,36 +1,14 @@
-var fs = require('fs');
-var path = require('path');
-
-module.exports = filterDirectory;
-
-function filterDirectory(thepath, ext, callback)
-{
-	fs.readdir(String(thepath), function(err, list)
-	{
+var fs = require('fs')
+var path = require('path')
+    
+module.exports = function (dir, filterStr, callback) {
+	fs.readdir(dir, function (err, list) {
 		if (err)
-		{
-			return callback(err);
-		}
-		
-		// Approach using list filter.
-		list = list.filter(function(file)
-		{
-			return path.extname(file) === "." + ext;
-		});
-		callback(null, list);
+			return callback(err)
 
-		/*
-		 * Alternative approach using another array.
-		 *
-		var answer = [];
-		list.forEach(function(file)
-		{
-			if (path.extname(file) === "." + ext)
-			{
-				answer.push(file);
-			}			
-		});	
-		callback(null, answer);
-		 */
-	});
+		list = list.filter(function (file) {
+			return path.extname(file) === '.' + filterStr
+		})
+		callback(null, list)
+	})
 }
