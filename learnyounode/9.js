@@ -1,38 +1,27 @@
-var http = require("http");
-
-var urlContent = [];
-var completionCounter = 0;
-
-for (var i = 0; i < 3; ++i)
-{
-	getUrlContent(i);
+var http = require('http')
+var bl = require('bl')
+var results = []
+var count = 0
+    
+function printResults () {
+	for (var i = 0; i < 3; i++)
+		console.log(results[i])
 }
+    
+function httpGet (index) {
+	http.get(process.argv[2 + index], function (response) {
+		response.pipe(bl(function (err, data) {
+			if (err)
+				return console.error(err)
 
-function getUrlContent(index)
-{
-	http.get(process.argv[index+2], function(response)
-	{
-		urlContent[index] = "";
-		
-		response.setEncoding("utf8");
-	
-		response.on("data", function(data)
-		{
-			urlContent[index] += data;
-		});
-	
-		response.on("error", console.error);
-	
-		response.on("end", function(data)
-		{
-			++completionCounter;
-			if (completionCounter === 3)
-			{
-				urlContent.forEach(function(content)
-				{
-					console.log(content);
-				});
-			}
-		});
-	});
+			results[index] = data.toString()
+			count++
+
+			if (count == 3)
+				printResults()
+		}))
+	})
 }
+    
+for (var i = 0; i < 3; i++)
+	httpGet(i)
