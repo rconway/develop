@@ -1,4 +1,6 @@
 
+var startTime = Date.now();
+
 //==============================================================================
 // Object: human
 //==============================================================================
@@ -6,7 +8,7 @@
 // Constructor
 function human(age) {
 	this.age = age;
-	console.log("human constructed with age: " + this.age);
+	//console.log("human constructed with age: " + this.age);
 }
 
 // Method: sayAge()
@@ -19,11 +21,11 @@ human.prototype.summarise = function() {
 	this.sayAge();
 }
 
-// Test human
+/*// Test human
 console.log("---");
 var h = new human(12);
 h.summarise();
-
+*/
 //==============================================================================
 // Object: person
 //==============================================================================
@@ -33,7 +35,7 @@ function person(age, name) {
 	// Call the base-object constructor
 	human.prototype.constructor.call(this, age);
 	this.name = name;
-	console.log("person constructed with name: " + this.name);
+	//console.log("person constructed with name: " + this.name);
 }
 
 // Derive from human
@@ -51,7 +53,7 @@ person.prototype.summarise = function() {
 	this.sayName();
 }
 
-// Test human again
+/*// Test human again
 console.log("---");
 var h2 = new human(34);
 h2.summarise();
@@ -60,5 +62,16 @@ h2.summarise();
 console.log("---");
 var p = new person(56, "fredbob");
 p.summarise();
-
+*/
 //==============================================================================
+
+var objects = [];
+for (var i = 0; i < 10000; ++i) {
+	objects.push( new person(i, "SomeOne" + i ) );
+}
+
+objects.forEach( function(item) {
+	item.summarise();
+} );
+
+console.log("Time Taken (msecs) = " + (Date.now()-startTime));
