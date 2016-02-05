@@ -1,3 +1,4 @@
+const util = require("util");
 
 var startTime = Date.now();
 
@@ -40,7 +41,8 @@ function person(age, name) {
 }
 
 // Derive from human
-person.prototype = Object.create(human.prototype);
+//person.prototype = Object.create(human.prototype);
+util.inherits(person, human);
 
 // Method: sayName()
 person.prototype.sayName = function() {
