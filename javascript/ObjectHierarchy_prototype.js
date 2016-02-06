@@ -64,9 +64,8 @@ p.summarise();
 
 //==============================================================================
 
+console.time("Create Many Persons");
 var count = 0;
-console.log(">>>>> Start collection performance <<<<<");
-var startTime = Date.now();
 
 var objects = [];
 for (var i = 0; i < 100000; ++i) {
@@ -78,6 +77,6 @@ objects.forEach( function(item) {
 	count++;
 } );
 
-console.log("Time Taken (msecs) = " + (Date.now()-startTime));
+console.timeEnd("Create Many Persons");
 
 console.log("Count => " + count);
