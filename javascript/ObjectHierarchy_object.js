@@ -1,6 +1,4 @@
 
-var startTime = Date.now();
-
 // Utility function
 function inheritMethods(sourceObj, targetObj) {
 	for (var prop in sourceObj) {
@@ -43,11 +41,11 @@ function createHuman(age) {
 	}
 }
 
-/*// Test human
+// Test human
 console.log("---");
 var h = createHuman(12);
 h.summarise();
-*/
+
 //==============================================================================
 // Object: person
 //==============================================================================
@@ -90,7 +88,7 @@ function createPerson(age, name) {
 	return retObj;
 }
 
-/*// Test human again
+// Test human again
 console.log("---");
 var h2 = createHuman(34);
 h2.summarise();
@@ -105,12 +103,23 @@ console.log("---");
 p.setAge(123);
 p.setName("BurtLarry");
 p.summarise();
-*/
+
 //==============================================================================
 
+var count = 0;
+console.log(">>>>> Start collection performance <<<<<");
+var startTime = Date.now();
+
 var objects = [];
-for (var i = 0; i < 1000; ++i) {
+for (var i = 0; i < 100000; ++i) {
 	objects.push( createPerson(i, "SomeOne" + i ) );
 }
 
+objects.forEach( function(item) {
+	//item.summarise();
+	count++;
+} );
+
 console.log("Time Taken (msecs) = " + (Date.now()-startTime));
+
+console.log("Count => " + count);

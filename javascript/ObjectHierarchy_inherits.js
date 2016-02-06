@@ -1,7 +1,5 @@
 const util = require("util");
 
-var startTime = Date.now();
-
 //==============================================================================
 // Object: human
 //==============================================================================
@@ -68,15 +66,20 @@ p.summarise();
 
 //==============================================================================
 
-/*
+var count = 0;
+console.log(">>>>> Start collection performance <<<<<");
+var startTime = Date.now();
+
 var objects = [];
-for (var i = 0; i < 10000; ++i) {
+for (var i = 0; i < 100000; ++i) {
 	objects.push( new person(i, "SomeOne" + i ) );
 }
 
 objects.forEach( function(item) {
-	item.summarise();
+	//item.summarise();
+	count++;
 } );
-*/
 
 console.log("Time Taken (msecs) = " + (Date.now()-startTime));
+
+console.log("Count => " + count);
