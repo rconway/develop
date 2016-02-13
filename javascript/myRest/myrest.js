@@ -1,6 +1,7 @@
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
+// Use clustering
 if (cluster.isMaster) {
 	// Fork workers.
 	for (var i = 0; i < numCPUs; i++) {
@@ -11,14 +12,12 @@ if (cluster.isMaster) {
 		console.log(`worker ${worker.process.pid} died`);
 	});
 } else {
-	const express = require("express");
-	const app = express();
+	// Get API from module
+	var myrestapi = require("./myrestapi");
+	var api = myrestapi.create();
 
-	app.use('/', require("./routes/root"));
-	app.use('/details', require("./routes/details"));
-	app.use('/time', require("./routes/time"));
-
-	app.listen(3000, function() {
+	// Start listening
+	api.listen(3000, function() {
 		console.log("myRest listening on port 3000: #" + cluster.worker.id);
 	})
 }
