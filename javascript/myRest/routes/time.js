@@ -18,7 +18,14 @@ router.use(function(req, res, next) {
 
 // Request handler
 router.get("/", function(req, res, next) {
-	res.send("#" + workerId + ": " + new Date().toISOString() + "\n");
+  res.send("#" + workerId + ": " + new Date().toISOString() + "\n");
+});
+
+// Request handler
+router.get("/:firstname/:lastname", function(req, res, next) {
+	res.send("#" + workerId + ": " + req.query.greeting + " Mr. " + req.params.lastname
+		+ ", the current time is " + new Date().toISOString()
+		+ " " + req.params.firstname + "\n");
 });
 
 // Publish the router instance
