@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Table Test</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
+    <script type="text/javascript" src="node_modules/node-uuid/uuid.js"></script>
+    <script type="text/javascript" src="node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="tableapp.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid" ng-app="tableapp">
+      <div ng-controller="TableCtrl as $ctrl">
+
+        <div class="alert alert-warning" ng-show="!$ctrl.haveRequests()">
+          <p class="text-center">
+            <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+            No requests found.
+          </p>
+        </div>
+        
+        <div ng-show="$ctrl.haveRequests()">
+          
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['All'] }" ng-click="$ctrl.toggleStatusFilter('All')">All</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['Completed'] }" ng-click="$ctrl.toggleStatusFilter('Completed')">Completed</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['In Progress'] }" ng-click="$ctrl.toggleStatusFilter('In Progress')">In Progress</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['Failed'] }" ng-click="$ctrl.toggleStatusFilter('Failed')">Failed</button>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Description</th>
+                <th>Submission Date</th>
+                <th>Status</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="request in $ctrl.requests | filter:$ctrl.filterByStatus | orderBy:'-date' as filteredRequests">
+              <tr ng-class="{ success: request.status === 'Completed', info: request.status === 'In Progress', danger: request.status === 'Failed' }">
+                <td style="font-family: monospace">{{request.id}}</td>
+                <td>{{request.desc}}</td>
+                <td>{{request.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{request.status}}</td>
+                <td><a href="{{request.result}}" class="btn-sm btn-success" role="button" ng-show="request.status === 'Completed'"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> download</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-warning" ng-show="filteredRequests.length === 0">
+            <p class="text-center">
+              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+              No requests matching filter.
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</html>
