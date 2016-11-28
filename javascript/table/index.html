@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="container-fluid" ng-app="tableapp">
-      <div ng-controller="TableCtrl as $ctrl">
+      <div ng-controller="requestController as $ctrl">
 
         <div class="alert alert-warning" ng-show="!$ctrl.haveRequests()">
           <p class="text-center">
@@ -22,28 +22,30 @@
           
           <div class="btn-group pull-right">
             <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['All'] }" ng-click="$ctrl.toggleStatusFilter('All')">All</button>
-            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['Completed'] }" ng-click="$ctrl.toggleStatusFilter('Completed')">Completed</button>
-            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['In Progress'] }" ng-click="$ctrl.toggleStatusFilter('In Progress')">In Progress</button>
-            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['Failed'] }" ng-click="$ctrl.toggleStatusFilter('Failed')">Failed</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['completed'] }" ng-click="$ctrl.toggleStatusFilter('completed')">Completed</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['inprogress'] }" ng-click="$ctrl.toggleStatusFilter('inprogress')">In Progress</button>
+            <button type="button" class="btn btn-default" ng-class="{ 'btn-primary': $ctrl.statusFilter['failed'] }" ng-click="$ctrl.toggleStatusFilter('failed')">Failed</button>
           </div>
 
           <table class="table">
             <thead>
               <tr>
                 <th>Request ID</th>
-                <th>Description</th>
                 <th>Submission Date</th>
                 <th>Status</th>
+                <th>End Date</th>
+                <th>Size</th>
                 <th>Result</th>
               </tr>
             </thead>
-            <tbody ng-repeat="request in $ctrl.requests | filter:$ctrl.filterByStatus | orderBy:'-date' as filteredRequests">
-              <tr ng-class="{ success: request.status === 'Completed', info: request.status === 'In Progress', danger: request.status === 'Failed' }">
-                <td style="font-family: monospace">{{request.id}}</td>
-                <td>{{request.desc}}</td>
-                <td>{{request.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <tbody ng-repeat="request in $ctrl.requests | filter:$ctrl.filterByStatus | orderBy:'-submissionDate' as filteredRequests">
+              <tr ng-class="{ success: request.status === 'completed', info: request.progress !== undefined, danger: request.status === 'failed' }">
+                <td style="font-family: monospace">{{request.requestId}}</td>
+                <td>{{request.submissionDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                 <td>{{request.status}}</td>
-                <td><a href="{{request.result}}" class="btn-sm btn-success" role="button" ng-show="request.status === 'Completed'"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> download</a></td>
+                <td>{{request.endDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td style="font-family: monospace">{{request.results.urlResult.contentLength}}</td>
+                <td><a href="{{request.results.urlResult.location}}" target="_blank" class="btn-sm btn-success" role="button" ng-show="request.status === 'completed'"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> download</a></td>
               </tr>
             </tbody>
           </table>
